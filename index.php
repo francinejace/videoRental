@@ -152,7 +152,7 @@ require 'functions.php';
     </div>
     <!-- Main Footer -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2023 Your Company.</strong>
+        <strong>Copyright &copy; 2023 Francine Jace Bachiller</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 3.2.0
