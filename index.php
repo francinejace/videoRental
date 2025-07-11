@@ -55,7 +55,95 @@ require 'functions.php';
                         include 'view_single.php';
                         break;
                     default:
-                        echo '<div class="alert alert-info">Welcome to the Video Rental System!</div>';
+                        // Home page content
+                        $total_videos = getTotalVideos();
+                        $recent_videos = array_slice(getVideos(), 0, 5); // Get 5 most recent videos
+                        
+                        // Display alert if exists
+                        $alert = getAlert();
+                        if ($alert) {
+                            echo '<div class="alert alert-' . $alert['type'] . ' alert-dismissible fade show" role="alert">
+                                    ' . htmlspecialchars($alert['message']) . '
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>';
+                        }
+                        ?>
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3><?php echo $total_videos; ?></h3>
+                                        <p>Total Videos</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                    <a href="index.php?page=view" class="small-box-footer">
+                                        View All <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Welcome to Video Rental System</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Manage your video collection with ease. You can:</p>
+                                        <ul>
+                                            <li>Add new videos to your collection</li>
+                                            <li>View and search through all videos</li>
+                                            <li>Edit video information</li>
+                                            <li>Delete videos from your collection</li>
+                                        </ul>
+                                        <div class="mt-3">
+                                            <a href="index.php?page=add" class="btn btn-success">
+                                                <i class="fas fa-plus"></i> Add New Video
+                                            </a>
+                                            <a href="index.php?page=view" class="btn btn-primary">
+                                                <i class="fas fa-list"></i> View All Videos
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Recent Videos</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <?php if (count($recent_videos) > 0): ?>
+                                            <ul class="list-unstyled">
+                                                <?php foreach ($recent_videos as $video): ?>
+                                                    <li class="mb-2">
+                                                        <a href="index.php?page=view_single&id=<?php echo $video['id']; ?>" class="text-decoration-none">
+                                                            <strong><?php echo htmlspecialchars($video['title']); ?></strong>
+                                                        </a>
+                                                        <br>
+                                                        <small class="text-muted">
+                                                            <?php echo htmlspecialchars($video['director']); ?> • 
+                                                            <?php echo htmlspecialchars($video['release_year']); ?>
+                                                        </small>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                            <a href="index.php?page=view" class="btn btn-sm btn-outline-primary">View All</a>
+                                        <?php else: ?>
+                                            <p class="text-muted">No videos in your collection yet.</p>
+                                            <a href="index.php?page=add" class="btn btn-success">Add Your First Video</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
                         break;
                 }
                 ?>
